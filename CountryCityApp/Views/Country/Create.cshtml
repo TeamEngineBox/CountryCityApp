@@ -1,0 +1,108 @@
+﻿@model CountryCityApp.Models.Country
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateCountry</title>
+</head>
+
+
+
+<body>
+
+    @using (Html.BeginForm("Create", "Country", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Country</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.About, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <textarea id="About" name="About"></textarea>
+                    @Html.ValidationMessageFor(model => model.About)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Picture, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="Picture" id="Picture" />
+                    @Html.ValidationMessageFor(model => model.Picture)
+                </div>
+            </div>
+            
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+
+    <div>
+        <table class="table ">
+            <thead>
+
+                <tr>
+                    <th>Serial</th>
+                    <th>Name</th>
+                    <th>About</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @{ int i = 0;}
+
+                @foreach (var country in ViewBag.countries)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @country.Name
+                        </td>
+                        <td>
+                            @Html.Raw(country.About)
+                        </td>
+
+                        
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        </div>
+
+        
+
+        <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+        <script>tinymce.init({ selector: 'textarea' });</script>
+</body>
+</html>
